@@ -37,7 +37,11 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Firestore.instance
+              .collection('chats/pCOBPMJt44ZD4Yh1Qhoz/messages')
+              .add({'text': 'How are you?'});
+        },
       ),
     );
   }
