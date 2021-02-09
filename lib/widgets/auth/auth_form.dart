@@ -27,6 +27,7 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
+      // PARSING DATA TO AUTH SCREEN
       widget.submitFn(_email, _username, _password, _isLogin);
     }
   }
