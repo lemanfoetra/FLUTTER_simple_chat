@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/auth_screen.dart';
 import './screens/chat_screen.dart';
 
 void main() => runApp(MyApp());
@@ -20,8 +21,15 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        buttonTheme: ButtonTheme.of(context).copyWith(
+          buttonColor: Colors.pink,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
-      home: ChatScreen(),
+      home: AuthScreen(),
     );
   }
 }
