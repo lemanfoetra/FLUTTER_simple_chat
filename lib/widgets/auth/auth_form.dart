@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final bool isLoading;
   final void Function(
     String email,
     String username,
@@ -9,7 +10,7 @@ class AuthForm extends StatefulWidget {
     BuildContext ctx,
   ) submitFn;
 
-  AuthForm({this.submitFn});
+  AuthForm({this.submitFn, this.isLoading});
 
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -93,24 +94,33 @@ class _AuthFormState extends State<AuthForm> {
                   },
                 ),
                 SizedBox(height: 15),
-                RaisedButton(
-                  child: Text(
-                    _isLogin ? 'Login' : 'Register',
-                  ),
-                  onPressed: () {
-                    _onSubmit();
-                  },
-                ),
-                FlatButton(
-                  child: Text(
-                    _isLogin ? 'Create a new account' : 'I have a account',
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = !_isLogin;
-                    });
-                  },
-                )
+                widget.isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      )
+                    : RaisedButton(
+                        child: Text(
+                          _isLogin ? 'Login' : 'Register',
+                        ),
+                        onPressed: () {
+                          _onSubmit();
+                        },
+                      ),
+                !widget.isLoading
+                    ? FlatButton(
+                        child: Text(
+                          _isLogin
+                              ? 'Create a new account'
+                              : 'I have a account',
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isLogin = !_isLogin;
+                          });
+                        },
+                      )
+                    : Center(),
               ],
             ),
           ),
