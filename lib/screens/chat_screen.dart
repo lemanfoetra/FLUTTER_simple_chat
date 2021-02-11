@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_chat/widgets/chat/message.dart';
+import 'package:simple_chat/widgets/chat/new_message.dart';
 
 class ChatScreen extends StatelessWidget {
   @override
@@ -41,14 +42,13 @@ class ChatScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Message(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Firestore.instance
-              .collection('chats/pCOBPMJt44ZD4Yh1Qhoz/messages')
-              .add({'text': 'How are you?'});
-        },
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Message(),
+          ),
+          NewMessage(),
+        ],
       ),
     );
   }

@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class NewMessage extends StatefulWidget {
+  @override
+  _NewMessageState createState() => _NewMessageState();
+}
+
+class _NewMessageState extends State<NewMessage> {
+  var _messageController = TextEditingController();
+  String message = '';
+
+  void _sendMessageFn() {
+    // Menghilangkan keyboard saat send ditekan
+    FocusScope.of(context).unfocus();
+    Firestore.instance.collection('chat').add({
+      'text': message,
+      'created_at': Timestamp.now(),
+    });
+    _messageController.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              controller: _messageController,
+              decoration: InputDecoration(labelText: "Send message.."),
+              onChanged: (value) {
+                setState(() {
+                  message = value.trim();
+                });
+              },
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.send),
+            color: Theme.of(context).primaryColor,
+            onPressed: message.isEmpty ? null : _sendMessageFn,
+          )
+        ],
+      ),
+    );
+  }
+}
