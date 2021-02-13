@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:simple_chat/widgets/chat/bubble_message.dart';
 
 class Message extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class Message extends StatelessWidget {
               if (data[i]['text'] == null) {
                 return Container();
               }
-              return Text(data[i]['text']);
+              return BubbleMessage(data[i]['text']);
             },
           );
         }
