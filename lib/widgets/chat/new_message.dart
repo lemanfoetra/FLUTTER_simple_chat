@@ -14,11 +14,14 @@ class _NewMessageState extends State<NewMessage> {
   void _sendMessageFn() async {
     // Menghilangkan keyboard saat send ditekan
     FocusScope.of(context).unfocus();
-    final userId = await FirebaseAuth.instance.currentUser();
+    final FirebaseUser userId = await FirebaseAuth.instance.currentUser();
+    final userData =
+        await Firestore.instance.collection('users').document(userId.uid).get();
     Firestore.instance.collection('chat').add({
       'text': message,
       'created_at': Timestamp.now(),
       'user_id': userId.uid,
+      'username': userData['username'],
     });
     _messageController.clear();
   }

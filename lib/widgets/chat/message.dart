@@ -40,8 +40,9 @@ class Message extends StatelessWidget {
                     return Container();
                   }
                   return BubbleMessage(
-                    data[i]['text'],
-                    data[i]['user_id'] == futureSnapshot.data.uid,
+                    username: data[i]['username'],
+                    message: data[i]['text'],
+                    isMe: data[i]['user_id'] == futureSnapshot.data.uid,
                     key: ValueKey(data[i].documentID),
                   );
                 },
