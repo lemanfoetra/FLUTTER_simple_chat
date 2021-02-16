@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_chat/widgets/pickers/user_image_picker.dart';
+import 'dart:io';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
@@ -24,10 +25,26 @@ class _AuthFormState extends State<AuthForm> {
   String _email = "";
   String _username = "";
   String _password = "";
+  File _imageFile;
+
+  void _pickedImage(File imageFile) {
+    _imageFile = imageFile;
+  }
 
   void _onSubmit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
+    // JIKA REGISTER CEK APAKAH USERS TELAH PICK IMAGE?
+    if (_imageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Mohon Upload Image'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+
     if (isValid) {
       _formKey.currentState.save();
       // PARSING DATA TO AUTH SCREEN
@@ -52,7 +69,7 @@ class _AuthFormState extends State<AuthForm> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                if (!_isLogin) UserImagePicker(),
+                if (!_isLogin) UserImagePicker(_pickedImage),
                 TextFormField(
                   key: ValueKey('email'),
                   keyboardType: TextInputType.emailAddress,
