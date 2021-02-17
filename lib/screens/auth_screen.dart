@@ -49,6 +49,9 @@ class _AuthScreenState extends State<AuthScreen> {
             .child("${_authResult.user.uid}.jpg");
         await ref.putFile(imageFile).onComplete;
 
+        // GET url file setelah di upload
+        final urlImage = await ref.getDownloadURL();
+
         // SIMPAN DATA KE FIREBASE CLOUD
         await _store
             .collection('users')
@@ -56,6 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .setData({
           "username": username,
           "email": email,
+          "image_url": urlImage,
         });
       }
     } on PlatformException catch (error) {
