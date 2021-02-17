@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import '../widgets/auth/auth_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String username,
     String password,
     bool isLogin,
+    File imageFile,
     BuildContext ctx,
   ) async {
     AuthResult _authResult;
@@ -38,6 +41,14 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+
+        // UPLOAD image users
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('users_image')
+            .child("${_authResult.user.uid}.jpg");
+        await ref.putFile(imageFile).onComplete;
+
         // SIMPAN DATA KE FIREBASE CLOUD
         await _store
             .collection('users')
