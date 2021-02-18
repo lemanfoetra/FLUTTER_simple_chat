@@ -44,6 +44,7 @@ class Message extends StatelessWidget {
                     message: data[i]['text'],
                     isMe: data[i]['user_id'] == futureSnapshot.data.uid,
                     key: ValueKey(data[i].documentID),
+                    imageUrl: data[i]['image_url'] ?? null,
                   );
                 },
               );
