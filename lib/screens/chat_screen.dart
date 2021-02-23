@@ -28,6 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
       print("on resume");
       return;
     });
+    frm.subscribeToTopic('chat');
     super.initState();
   }
 
